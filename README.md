@@ -1,132 +1,102 @@
-📊 Market Regime Analysis using Unsupervised Learning
+# Market Regime Analysis — NIFTY 50
 
-This project identifies and analyzes market regimes in the Indian stock market (NIFTY 50 index) using unsupervised machine learning techniques.
-The goal is to understand different market conditions such as high volatility bull phases and low volatility sideways phases using historical price and volume data.
+This project analyzes **market regimes in the NIFTY 50 index** using a combination of
+rule-based methods and unsupervised machine learning (K-Means clustering).
 
-🚀 Project Overview
+The goal is to identify different market environments (regimes), study their persistence,
+and evaluate how returns, volatility, and risk behave across regimes.
 
-Financial markets behave differently under varying volatility and trend conditions.
-Instead of manually defining these regimes, this project uses KMeans clustering to automatically discover hidden market states based on quantitative features.
+## Project Highlights
 
-Key outcomes:
+- End-to-end data pipeline (raw → clean → features → regimes)
+- Rule-based volatility regimes
+- Unsupervised regime detection using **K-Means clustering**
+- Regime persistence & transition analysis
+- Portfolio-ready visualizations and insights
 
-Identified distinct market regimes
+## Data
 
-Labeled regimes based on statistical characteristics
+- **Source:** Yahoo Finance (via `yfinance`)
+- **Instrument:** NIFTY 50 (`^NSEI`)
+- **Frequency:** Daily
+- **Period:** 2015 – Present
 
-Visualized regimes directly on price charts
+## Project Structure
 
-Built a reproducible, end-to-end data analysis pipeline
-
-📂 Project Structure
 market_regime_analysis/
-│
 ├── data/
-│   ├── clean/                 # Cleaned raw market data
-│   ├── features/              # Engineered features
-│   └── processed/             # Final dataset with regime labels
-│
-├── notebook/
-│   ├── 01_data_cleaning.ipynb
-│   ├── 02_returns_and_volatility.ipynb
-│   ├── 03_market_regimes.ipynb
-│   └── 04_dashboard.ipynb
-│
-├── report/
-│   └── market_regime_analysis_report.md
-│
-├── download_data.py            # Data download script
-├── README.md
-└── .gitignore
+│ ├── raw/
+│ ├── clean/
+│ └── features/
+├── notebooks/
+│ ├── 01_data_cleaning.ipynb
+│ ├── 02_feature_engineering.ipynb
+│ ├── 03_market_regimes.ipynb
+│ └── 04_dashboard.ipynb
+├── assets/
+│ └── market_regimes_overlay.png
+└── README.md
 
-🧠 Methodology
-1️⃣ Data Collection
+## Methodology
 
-Historical NIFTY 50 data downloaded from Yahoo Finance
+### 1️.Feature Engineering
+- Daily returns
+- Log returns
+- Rolling volatility (20-day)
 
-Daily OHLCV data used for analysis
+### 2️.Rule-Based Regimes
+- Market classified into **High Volatility** and **Low Volatility**
+- Threshold based on rolling volatility median
 
-2️⃣ Feature Engineering
+### 3️.Machine Learning Regimes
+- Features standardized using `StandardScaler`
+- **K-Means clustering (k = 2)** applied
+- Regimes interpreted as:
+  - Stable / Low-risk market
+  - Volatile / High-risk market
 
-The following features were created:
+### 4️.Regime Persistence
+- Duration analysis of each regime
+- Transition probability matrix to understand regime stability
 
-Log Returns – captures price movement
+## Key Visualization
 
-Rolling Volatility (30-day) – measures market risk
+### Market Regimes Overlayed on Price
 
-Trend Strength (20 vs 50 SMA) – detects momentum
+![Market Regimes](assets/market_regimes_overlay.png)
 
-Volume Ratio – identifies abnormal trading activity
+This chart highlights how different market regimes align with price movements,
+clearly showing periods of elevated risk and stability.
 
-3️⃣ Clustering (Unsupervised Learning)
+## Regime Summary Insights
 
-Applied KMeans clustering
+- High-volatility regimes exhibit:
+  - Higher volatility
+  - Larger drawdowns
+  - Shorter persistence
+- Low-volatility regimes are:
+  - More persistent
+  - Lower risk
+  - Better suited for long-term positioning
 
-Optimal number of clusters selected empirically
+## Tools & Libraries
 
-Each cluster represents a distinct market regime
+- Python
+- pandas, numpy
+- matplotlib
+- scikit-learn
+- Jupyter Notebook
 
-4️⃣ Regime Interpretation
+## Why This Project Matters
 
-Clusters were interpreted using:
+This project demonstrates:
+- Strong data cleaning & feature engineering skills
+- Practical application of machine learning in finance
+- Ability to translate analysis into actionable insights
+- Clean project structure suitable for real-world analytics work
 
-Average returns
+## Future Improvements
 
-Volatility
-
-Trading volume
-
-Example regimes:
-
-High-Volatility Bull Market
-
-Low-Volatility Sideways Market
-
-📈 Market Regime Summary
-Regime	Avg Return	Volatility	Avg Volume	Observations
-High-Vol Bull	Higher	High	High	Strong upward moves with risk
-Low-Vol Sideways	Low	Low	Moderate	Range-bound consolidation
-📊 Visualization
-
-Market regimes are overlaid directly on the NIFTY 50 price chart, making regime transitions visually intuitive.
-
-📌 (Charts will be added below in the next step)
-
-🛠️ Tools & Technologies
-
-Python
-
-Pandas, NumPy
-
-Scikit-Learn
-
-Matplotlib
-
-Jupyter Notebook
-
-Git & GitHub
-
-🎯 Key Learnings
-
-Applied unsupervised learning to real financial data
-
-Designed a feature-driven clustering approach
-
-Interpreted ML output in a business/market context
-
-Built an end-to-end reproducible data analysis project
-
-📌 Future Improvements
-
-Add more regimes (bear / crash phases)
-
-Use HMM or Gaussian Mixture Models
-
-Backtest regime-based trading strategies
-
-Deploy interactive dashboard (Streamlit)
-
-👤 Author
-
-Arif Sheikh
-Aspiring Data Analyst | Python | SQL | Machine Learning
+- Add macro indicators (VIX, interest rates)
+- Try HMM-based regime detection
+- Backtest regime-based trading strategies
