@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 📊 Market Regime Analysis — NIFTY 50
 
 ## 🔍 Objective
